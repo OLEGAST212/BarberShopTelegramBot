@@ -1,5 +1,7 @@
-
-from telegram import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, WebAppInfo, InlineKeyboardButton, \
+    InlineKeyboardMarkup
+from telegram.ext import ContextTypes
+from config import WEB_APP_URL
 
 def contact_keyboard() -> ReplyKeyboardMarkup:
     """Клавиатура для запроса и отправки номера."""
@@ -9,30 +11,16 @@ def contact_keyboard() -> ReplyKeyboardMarkup:
         resize_keyboard=True
     )
 
-def remove_keyboard() -> ReplyKeyboardRemove:
-    """Убрать пользовательскую клавиатуру."""
-    return ReplyKeyboardRemove()
-from telegram import (
-    KeyboardButton,
-    ReplyKeyboardMarkup,
-    ReplyKeyboardRemove,
-)
 
-
-
-from telegram import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
-
-def web_app_keyboard() -> ReplyKeyboardMarkup:
-    return ReplyKeyboardMarkup(
+def web_app_inline_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
         [[
-          KeyboardButton(
-            text="🛠 Открыть мини-приложение",
-            web_app=WebAppInfo(url="https://barbershopminiapp.com")
-          )
+            InlineKeyboardButton(
+                text="qoob/Личный кабинет",
+                web_app=WebAppInfo(url=WEB_APP_URL)
+            )
         ]],
-        resize_keyboard=True
+
     )
-
-
 def remove_keyboard() -> ReplyKeyboardRemove:
     return ReplyKeyboardRemove()

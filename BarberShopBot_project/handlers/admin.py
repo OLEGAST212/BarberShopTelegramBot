@@ -11,13 +11,13 @@ from telegram.helpers import escape_markdown
 async def admin_reply_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.message
 
-    # 1) Работаем только в админ-чате
+    # Работаем только в админ-чате
     if msg.chat.id != ADMIN_CHAT_ID:
         return
-    # 1.1) И только в нужной теме (thread)
+    # И только в нужной теме (thread)
     if msg.message_thread_id != ADMIN_THREAD_ID_1:
         return
-    # 2) Только replies — админ «ответил» на наше уведомление
+    # Только replies — админ «ответил» на наше уведомление
     if not msg.reply_to_message:
         return
     orig = msg.reply_to_message.text or ""
