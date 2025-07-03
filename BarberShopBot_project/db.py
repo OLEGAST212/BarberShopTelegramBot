@@ -37,3 +37,21 @@ def register_user(user_id: int, phone: str):
         WHERE telegram_id = ?
     """, (phone, user_id))
     conn.commit()
+
+def init_appointments_table():
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS appointments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            service TEXT,
+            datetime TEXT
+        )
+    """)
+    conn.commit()
+
+def save_appointment(user_id: int, service: str, dt: str):
+    cursor.execute(
+        "INSERT INTO appointments (user_id, service, datetime) VALUES (?, ?, ?)",
+        (user_id, service, dt)
+    )
+    conn.commit()

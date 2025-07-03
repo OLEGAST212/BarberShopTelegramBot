@@ -2,13 +2,12 @@ import logging
 from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN
 import db
-
 from handlers import (
     register_auth_handlers,
     register_dashboard_handlers,
     register_echo_handlers,
     register_error_handler,
-    register_admin_handlers,  # ← добавили
+    register_admin_handlers
 )
 
 logging.basicConfig(
@@ -19,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     db.init_db()
+    db.init_appointments_table()
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     # Регистрируем все группы хэндлеров
@@ -29,6 +29,7 @@ def main():
     register_error_handler(app)
 
     logger.info("Bot is starting…")
+
     app.run_polling()
 
 if __name__ == "__main__":

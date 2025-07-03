@@ -35,11 +35,7 @@ async def echo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text=admin_text
     )
 
-    # Уведомляем пользователя
-    await update.message.reply_text(
-        "Ваше сообщение отправлено администратору.",
-        reply_markup=remove_keyboard()
-    )
+
 
 def register_echo_handlers(app):
     app.add_handler(

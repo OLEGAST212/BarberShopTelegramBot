@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+  />
+  <title>Сибирь Барбершоп</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Telegram Web App JS -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <header class="header">
+    <img src="images/logo.png" alt="Логотип" class="logo" />
+    <div class="title-block">
+      <h1>Барбер</h1>
+      <p>Шоп/p>
+    </div>
+  </header>
+
+  <nav class="top-menu">
+    <button class="menu-btn" data-action="address">Адрес</button>
+    <button class="menu-btn" data-action="appointments">Записи</button>
+    <button class="menu-btn" data-action="share">Поделиться</button>
+    <button class="menu-btn" data-action="profile">Профиль</button>
+  </nav>
+
+  <main>
+    <button id="services-btn" class="big-btn">Персональные услуги</button>
+
+    <section id="services-list" class="hidden">
+      <ul>
+        <li><button data-action="wallet">Кошелёк <span class="badge">0</span></button></li>
+        <li><button data-action="shop">Магазин</button></li>
+        <li><button data-action="reviews">Отзывы <span class="badge">26</span></button></li>
+        <li><button data-action="about">О компании</button></li>
+        <li><button data-action="lang">Язык <span>Русский</span></button></li>
+      </ul>
+      <button id="back-btn" class="back-btn">Назад</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>1</small>
+    <p>@Barber_HQ_Bot</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
