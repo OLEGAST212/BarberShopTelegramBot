@@ -1,4 +1,6 @@
 import logging
+
+from telegram import MenuButtonWebApp, WebAppInfo
 from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, WEB_APP_URL
 import db
@@ -16,12 +18,26 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def main():
-    db.init_db()
-    db.init_appointments_table()
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+async def on_startup(app):
+    # Заменяем кнопку меню (⋮ → Открыть мини-приложение) на ваш текст и URL
+    await app.bot.set_chat_menu_button(
+        menu_button=MenuButtonWebApp(
+            text="ОНЛАЙН - ЗАПИСЬ",
+            web_app=WebAppInfo(url=WEB_APP_URL)
+        )
+    )
+    logger.info("Chat menu button updated to WebApp")
 
-    # Регистрируем все группы хэндлеров
+def main():
+    # 1) Зарегистрируйте on_startup **до** build()
+    builder = (
+        ApplicationBuilder()
+        .token(BOT_TOKEN)
+        .post_init(on_startup)
+    )
+    app = builder.build()
+
+    # 2) Регистрируйте все ваши хэндлеры
     register_auth_handlers(app)
     register_dashboard_handlers(app)
     register_admin_handlers(app)
@@ -29,6 +45,8 @@ def main():
     register_error_handler(app)
     logger.info("Bot is starting…")
     app.run_polling()
+
+
 
 if __name__ == "__main__":
     main()
