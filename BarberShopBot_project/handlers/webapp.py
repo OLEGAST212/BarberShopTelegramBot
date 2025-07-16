@@ -18,3 +18,9 @@ async def webapp_data_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
             email=p.get("email","")
         )
         await update.message.reply_text("✅ Профиль успешно сохранён!")
+
+def register_webapp_handlers(app):
+    app.add_handler(
+        MessageHandler(filters.StatusUpdate.WEB_APP_DATA, webapp_data_handler),
+        group=5
+    )

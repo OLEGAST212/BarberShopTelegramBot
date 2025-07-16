@@ -1,5 +1,6 @@
 import logging
-
+from BarberShopBot_project.db import init_db
+from handlers.webapp import register_webapp_handlers
 from telegram import MenuButtonWebApp, WebAppInfo
 from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, WEB_APP_URL
@@ -43,6 +44,7 @@ def main():
     register_admin_handlers(app)
     register_echo_handlers(app)
     register_error_handler(app)
+    register_webapp_handlers(app)
     logger.info("Bot is starting…")
     app.run_polling()
 
