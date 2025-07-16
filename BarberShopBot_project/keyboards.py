@@ -9,7 +9,8 @@ from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
-from config import WEB_APP_URL
+import logging
+from config import WEB_APP_URL,WEB_APP_URL_2
 
 def contact_keyboard() -> ReplyKeyboardMarkup:
     """Клавиатура для запроса и отправки номера."""
@@ -37,17 +38,15 @@ def contact_keyboard() -> ReplyKeyboardMarkup:
 #             )
 #         ]]
 #     )
+
+logger = logging.getLogger(__name__)
 def web_app_reply_keyboard(profile: dict | None = None) -> ReplyKeyboardMarkup:
-    """
-    Reply‑кнопка, запускающая WebApp.
-    profile: словарь с ключами first_name, last_name, patronymic, phone, email
-    """
     url = WEB_APP_URL
     if profile:
-        # Оставляем только непустые поля
         params = {k: v for k, v in profile.items() if v}
         if params:
             url = f"{WEB_APP_URL}?{urlencode(params)}"
+    logger.info("🌐 WebApp URL для формы: %s", url)
     return ReplyKeyboardMarkup(
         [[ KeyboardButton("Личный кабинет", web_app=WebAppInfo(url=url)) ]],
         resize_keyboard=True,

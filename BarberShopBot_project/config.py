@@ -12,3 +12,4 @@ ADMIN_THREAD_ID_1 = 40
 ADMIN_THREAD_ID_2 = 42
 # URL сайта с мини-приложением
 WEB_APP_URL = "https://olegast212.github.io/"
+WEB_APP_URL_2 = "https://olegast212.github.io/profile.html/"
