@@ -88,11 +88,11 @@ def register_user(user_id: int, phone: str):
 
 def save_profile(
     telegram_id: int,
-    first_name: str,
-    last_name: str,
-    patronymic: str,
-    phone: str,
-    email: str
+    first_name: str = "",
+    last_name: str = "",
+    patronymic: str = "",
+    phone: str = "",
+    email: str = ""
 ):
     """
     Сохраняет или обновляет профиль пользователя из Web App.
@@ -136,3 +136,22 @@ def save_appointment(user_id: int, service: str, dt: str):
         (user_id, service, dt)
     )
     conn.commit()
+def get_profile(telegram_id: int) -> dict:
+    """
+    Возвращает словарь с полями профиля, либо пустой dict.
+    """
+    cursor.execute("""
+        SELECT first_name, last_name, patronymic, phone, email
+        FROM profiles
+        WHERE telegram_id = ?
+    """, (telegram_id,))
+    row = cursor.fetchone()
+    if not row:
+        return {}
+    return {
+        "first_name": row[0] or "",
+        "last_name":  row[1] or "",
+        "patronymic": row[2] or "",
+        "phone":      row[3] or "",
+        "email":      row[4] or "",
+    }

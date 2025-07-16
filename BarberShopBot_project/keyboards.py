@@ -19,30 +19,37 @@ def contact_keyboard() -> ReplyKeyboardMarkup:
         resize_keyboard=True
     )
 
-def web_app_inline_keyboard(phone: str | None = None) -> InlineKeyboardMarkup:
+# def web_app_inline_keyboard(phone: str | None = None) -> InlineKeyboardMarkup:
+#     """
+#     Inline‑клавиатура для запуска WebApp.
+#     Если передан phone, он будет добавлен как GET‑параметр ?phone=... к URL.
+#     """
+#     url = WEB_APP_URL
+#     if phone:
+#         # Преобразуем номер в валидный GET‑параметр
+#         url = f"{WEB_APP_URL}?{urlencode({'phone': phone})}"
+#
+#     return InlineKeyboardMarkup(
+#         [[
+#             InlineKeyboardButton(
+#                 text="qoob/Личный кабинет",
+#                 web_app=WebAppInfo(url=url)
+#             )
+#         ]]
+#     )
+def web_app_reply_keyboard(profile: dict | None = None) -> ReplyKeyboardMarkup:
     """
-    Inline‑клавиатура для запуска WebApp.
-    Если передан phone, он будет добавлен как GET‑параметр ?phone=... к URL.
+    Reply‑кнопка, запускающая WebApp.
+    profile: словарь с ключами first_name, last_name, patronymic, phone, email
     """
     url = WEB_APP_URL
-    if phone:
-        # Преобразуем номер в валидный GET‑параметр
-        url = f"{WEB_APP_URL}?{urlencode({'phone': phone})}"
-
-    return InlineKeyboardMarkup(
-        [[
-            InlineKeyboardButton(
-                text="qoob/Личный кабинет",
-                web_app=WebAppInfo(url=url)
-            )
-        ]]
-    )
-def web_app_reply_keyboard(phone: str | None = None) -> ReplyKeyboardMarkup:
-    url = WEB_APP_URL
-    if phone:
-        url = f"{WEB_APP_URL}?{urlencode({'phone': phone})}"
+    if profile:
+        # Оставляем только непустые поля
+        params = {k: v for k, v in profile.items() if v}
+        if params:
+            url = f"{WEB_APP_URL}?{urlencode(params)}"
     return ReplyKeyboardMarkup(
-        [[KeyboardButton("Личный кабинет", web_app=WebAppInfo(url=url))]],
+        [[ KeyboardButton("Личный кабинет", web_app=WebAppInfo(url=url)) ]],
         resize_keyboard=True,
         one_time_keyboard=True
     )

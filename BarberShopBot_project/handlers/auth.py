@@ -1,25 +1,39 @@
+# handlers/auth.py
+
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, ContextTypes, filters
-from BarberShopBot_project.db import is_registered, ensure_user, register_user
-from BarberShopBot_project.keyboards import contact_keyboard, remove_keyboard, web_app_inline_keyboard
-from BarberShopBot_project.texts import WELCOME_NEW, WELCOME_BACK, USER_NOTIFICATION, WELCOME_BACK_2
-from BarberShopBot_project.db import get_user_phone
-from BarberShopBot_project.keyboards import web_app_reply_keyboard
+
+from BarberShopBot_project.db import (
+    is_registered,
+    ensure_user,
+    register_user,
+    get_user_phone, get_profile, save_profile,
+)
+from BarberShopBot_project.keyboards import (
+    contact_keyboard,
+    remove_keyboard,
+    web_app_reply_keyboard,
+)
+from BarberShopBot_project.texts import (
+    WELCOME_NEW,
+    WELCOME_BACK,
+    WELCOME_BACK_2,
+    USER_NOTIFICATION,
+)
 
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
+
     if is_registered(user_id):
-        # Уже зарегистрирован
-        phone = get_user_phone(user_id)  # возвращает строку или None
+        # Подгружаем все поля из profiles
+        profile = get_profile(user_id)
         await update.message.reply_text(
             WELCOME_BACK,
-            reply_markup=web_app_reply_keyboard(phone)
+            reply_markup=web_app_reply_keyboard(profile)
         )
-        await update.message.reply_text(WELCOME_BACK_2, reply_markup=remove_keyboard())
-        await update.message.reply_text(USER_NOTIFICATION, reply_markup=remove_keyboard())
+        # …
     else:
-        # Новичок: создаём запись и просим номер
-        ensure_user(user_id)
+        # …
         await update.message.reply_text(
             WELCOME_NEW,
             reply_markup=contact_keyboard()
@@ -28,19 +42,23 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def contact_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     contact = update.message.contact
     user_id = update.effective_user.id
+
+    # сохраняем в users
     register_user(user_id, contact.phone_number)
+    # и сразу же в profiles — пустые имена, только номер
+    save_profile(telegram_id=user_id, phone=contact.phone_number)
+
     await update.message.reply_text(
         f"Спасибо! Вы зарегистрированы под номером {contact.phone_number}.",
         reply_markup=remove_keyboard()
     )
-    # Показываем личный кабинет
+    # Показываем WebApp‑кнопку
+    profile = get_profile(user_id)
     await update.message.reply_text(
         WELCOME_BACK,
-        reply_markup=web_app_reply_keyboard(contact.phone_number)
+        reply_markup=web_app_reply_keyboard(profile)
     )
-    await update.message.reply_text(WELCOME_BACK_2, reply_markup=remove_keyboard())
-    await update.message.reply_text(USER_NOTIFICATION, reply_markup=remove_keyboard())
-
+    await update.message.reply_text(USER_NOTIFICATION)
 
 def register_auth_handlers(app):
     app.add_handler(CommandHandler("start", start_handler))
