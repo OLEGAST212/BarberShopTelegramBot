@@ -4,7 +4,7 @@ from handlers.webapp import register_webapp_handlers
 from telegram import MenuButtonWebApp, WebAppInfo
 from telegram.ext import ApplicationBuilder
 from config import BOT_TOKEN, WEB_APP_URL
-import db
+
 from handlers import (
     register_auth_handlers,
     register_dashboard_handlers,
@@ -30,7 +30,7 @@ async def on_startup(app):
     logger.info("Chat menu button updated to WebApp")
 
 def main():
-    # 1) Зарегистрируйте on_startup **до** build()
+    init_db()
     builder = (
         ApplicationBuilder()
         .token(BOT_TOKEN)

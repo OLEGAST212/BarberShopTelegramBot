@@ -2,12 +2,15 @@ import json
 from telegram import Update
 from telegram.ext import MessageHandler, ContextTypes, filters
 from BarberShopBot_project.db import save_profile
-
+import logging
 async def webapp_data_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Telegram.WebApp.sendData придёт в update.message.web_app_data
+    logging.info("Вошли в webapp_data_handler")
     w = update.message.web_app_data
     if not w:
+        logging.info("Но это не web_app_data, выходим")
         return
+
+    logging.info("Приняты данные из WebApp: %s", w.data)
 
     try:
         obj = json.loads(w.data)

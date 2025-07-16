@@ -3,14 +3,17 @@ from telegram.ext import CommandHandler, MessageHandler, ContextTypes, filters
 from BarberShopBot_project.db import is_registered, ensure_user, register_user
 from BarberShopBot_project.keyboards import contact_keyboard, remove_keyboard, web_app_inline_keyboard
 from BarberShopBot_project.texts import WELCOME_NEW, WELCOME_BACK, USER_NOTIFICATION, WELCOME_BACK_2
+from BarberShopBot_project.db import get_user_phone
+from BarberShopBot_project.keyboards import web_app_inline_keyboard
 
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     if is_registered(user_id):
         # Уже зарегистрирован
+        phone = get_user_phone(user_id)  # возвращает строку или None
         await update.message.reply_text(
             WELCOME_BACK,
-            reply_markup=web_app_inline_keyboard()
+            reply_markup=web_app_inline_keyboard(phone)
         )
         await update.message.reply_text(WELCOME_BACK_2, reply_markup=remove_keyboard())
         await update.message.reply_text(USER_NOTIFICATION, reply_markup=remove_keyboard())
@@ -33,7 +36,7 @@ async def contact_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Показываем личный кабинет
     await update.message.reply_text(
         WELCOME_BACK,
-        reply_markup=web_app_inline_keyboard()
+        reply_markup=web_app_inline_keyboard(contact.phone_number)
     )
     await update.message.reply_text(WELCOME_BACK_2, reply_markup=remove_keyboard())
     await update.message.reply_text(USER_NOTIFICATION, reply_markup=remove_keyboard())

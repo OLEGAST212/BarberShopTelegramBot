@@ -68,6 +68,10 @@ def ensure_user(user_id: int):
     )
     conn.commit()
 
+def get_user_phone(user_id: int) -> str | None:
+    cursor.execute("SELECT phone FROM users WHERE telegram_id = ?", (user_id,))
+    row = cursor.fetchone()
+    return row[0] if row else None
 
 def register_user(user_id: int, phone: str):
     """
