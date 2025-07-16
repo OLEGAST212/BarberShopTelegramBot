@@ -1,36 +1,47 @@
 import json
+import logging
 from telegram import Update
 from telegram.ext import MessageHandler, ContextTypes, filters
 from BarberShopBot_project.db import save_profile
-import logging
+
+# Настраиваем свой логгер
+logger = logging.getLogger(__name__)
+
 async def webapp_data_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    logging.info("Вошли в webapp_data_handler")
-    w = update.message.web_app_data
-    if not w:
-        logging.info("Но это не web_app_data, выходим")
+    # Всегда логируем заход в хэндлер
+    logger.info("🔔 webapp_data_handler вызван")
+
+    webapp = update.message.web_app_data
+    if not webapp:
+        logger.info("✖ Нет web_app_data в сообщении")
         return
 
-    logging.info("Приняты данные из WebApp: %s", w.data)
+    logger.info("ℹ Получены WebApp данные: %s", webapp.data)
 
+    # Пытаемся распарсить JSON
     try:
-        obj = json.loads(w.data)
+        obj = json.loads(webapp.data)
     except json.JSONDecodeError:
-        await update.message.reply_text("❌ Неверный формат данных.")
+        logger.error("❌ Ошибка разбора JSON: %s", webapp.data)
         return
 
-    if obj.get("type") == "profile_update":
-        p = obj["payload"]
+    # Обрабатываем payload
+    t = obj.get("type")
+    if t == "profile_update":
+        payload = obj.get("payload", {})
+        logger.info("✅ profile_update, сохраняем: %s", payload)
         save_profile(
             telegram_id=update.effective_user.id,
-            first_name=p.get("first_name", ""),
-            last_name=p.get("last_name", ""),
-            patronymic=p.get("patronymic", ""),
-            phone=p.get("phone", ""),
-            email=p.get("email", "")
+            first_name = payload.get("first_name", ""),
+            last_name  = payload.get("last_name", ""),
+            patronymic = payload.get("patronymic", ""),
+            phone      = payload.get("phone", ""),
+            email      = payload.get("email", "")
         )
-        await update.message.reply_text("✅ Профиль сохранён!")
+        await update.message.reply_text("✅ Профиль успешно сохранён!")
     else:
-        await update.message.reply_text("ℹ️ Получены неизвестные данные.")
+        logger.info("ℹ Неизвестный тип данных: %s", t)
+        await update.message.reply_text(f"ℹ️ Неизвестный тип: {t}")
 
 def register_webapp_handlers(app):
     app.add_handler(

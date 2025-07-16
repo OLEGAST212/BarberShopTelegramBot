@@ -37,7 +37,15 @@ def web_app_inline_keyboard(phone: str | None = None) -> InlineKeyboardMarkup:
             )
         ]]
     )
-
+def web_app_reply_keyboard(phone: str | None = None) -> ReplyKeyboardMarkup:
+    url = WEB_APP_URL
+    if phone:
+        url = f"{WEB_APP_URL}?{urlencode({'phone': phone})}"
+    return ReplyKeyboardMarkup(
+        [[KeyboardButton("Личный кабинет", web_app=WebAppInfo(url=url))]],
+        resize_keyboard=True,
+        one_time_keyboard=True
+    )
 def remove_keyboard() -> ReplyKeyboardRemove:
     """Убирает Reply‑клавиатуру."""
     return ReplyKeyboardRemove()
