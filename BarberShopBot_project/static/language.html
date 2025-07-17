@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Язык</title>
+  <base href="/">
+  <link rel="stylesheet" href="css/language.css"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="page-header">
+    <button type="button" id="lang-back" class="back-btn">❮ Назад</button>
+    <h2>Язык</h2>
+  </div>
+
+  <ul class="lang-list">
+    <li class="lang-item selected" data-lang="ru">
+      <img src="images/flag-ru.svg" alt="Russian flag" class="flag"/>
+      <div class="info">
+        <span class="title">Russian</span>
+        <span class="subtitle">Русский</span>
+      </div>
+      <div class="radio"><span></span></div>
+    </li>
+<!--    <li class="lang-item" data-lang="en">-->
+<!--      <img src="images/flag-en.svg" alt="English flag" class="flag"/>-->
+<!--      <div class="info">-->
+<!--        <span class="title">English</span>-->
+<!--        <span class="subtitle">Английский</span>-->
+<!--      </div>-->
+<!--      <div class="radio"><span></span></div>-->
+<!--    </li>-->
+  </ul>
+
+  <script>
+    const tg = Telegram.WebApp;
+    tg.ready();
+
+    const params   = new URLSearchParams(window.location.search);
+    const initData = params.get("init_data") || Telegram.WebApp.initData || "";
+
+    // Назад
+    document.getElementById('appt-back').onclick = () => {
+      location.href = `index.html?init_data=${encodeURIComponent(initData)}`;
+    };
+
+    // Выбор языка
+    document.querySelectorAll(".lang-item").forEach(item => {
+      item.onclick = () => {
+        // убрать выделение со всех
+        document.querySelectorAll(".lang-item").forEach(i => i.classList.remove("selected"));
+        // добавить к текущему
+        item.classList.add("selected");
+        const lang = item.dataset.lang;
+        // здесь можно сохранить выбор (fetch в /api или tg.sendData)
+        console.log("Выбран язык:", lang);
+      };
+    });
+  </script>
+</body>
+</html>

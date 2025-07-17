@@ -43,6 +43,13 @@ def init_db():
             datetime TEXT
         )
     """)
+    cursor.execute("""
+            CREATE TABLE IF NOT EXISTS employees (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                phone TEXT
+            )
+        """)
 
     conn.commit()
 
@@ -155,3 +162,16 @@ def get_profile(telegram_id: int) -> dict:
         "phone":      row[3] or "",
         "email":      row[4] or "",
     }
+
+def add_employee(name: str, phone: str | None = None):
+    cursor.execute(
+        "INSERT INTO employees (name, phone) VALUES (?, ?)",
+        (name, phone)
+    )
+    conn.commit()
+    return cursor.lastrowid
+
+def list_employees() -> list[dict]:
+    cursor.execute("SELECT id, name, phone FROM employees ORDER BY id")
+    rows = cursor.fetchall()
+    return [{"id": r[0], "name": r[1], "phone": r[2]} for r in rows]

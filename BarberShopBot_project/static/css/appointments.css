@@ -1,0 +1,97 @@
+/* css/appointments.css */
+
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+html, body {
+  height: 100%; background: #EFF3F8;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Страница-обёртка */
+#appt-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 16px;
+}
+
+/* Заголовок */
+.page-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 56px;
+  margin-bottom: 16px;
+}
+.page-header h2 {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1F1F1F;
+}
+.back-btn {
+  position: absolute;
+  left: 0;
+  background: none;
+  border: none;
+  color: #2F80ED;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Список опций */
+.options-list {
+  list-style: none;
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E0E0E0;
+  cursor: pointer;
+  position: relative;
+}
+.option-item:last-child {
+  border-bottom: none;
+}
+.option-item.chosen {
+  background: #F0F8FF;
+}
+.opt-icon {
+  width: 24px; height: 24px;
+  margin-right: 12px;
+}
+.opt-text {
+  flex: 1;
+  font-size: 16px;
+  color: #333333;
+}
+.opt-arrow {
+  font-size: 16px;
+  color: #BDBDBD;
+  font-weight: normal;
+}
+
+/* Кнопка «Оформить запись» */
+.confirm-btn {
+  margin-top: auto;
+  height: 48px;
+  background: #E0E0E0;
+  color: #828282;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: not-allowed;
+}
+.confirm-btn.enabled {
+  background: #FFD600;
+  color: #1F1F1F;
+  cursor: pointer;
+}

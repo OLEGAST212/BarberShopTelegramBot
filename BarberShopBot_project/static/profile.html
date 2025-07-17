@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <base href="/" />
+  <title>Профиль клиента</title>
+  <link rel="stylesheet" href="css/profile.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="profile-page">
+    <header class="profile-header">
+      <button id="profile-back" class="back-btn">❮ Назад</button>
+      <h2>Профиль клиента</h2>
+    </header>
+
+    <form id="profile-form">
+      <label for="first-name">Имя</label>
+      <input type="text" id="first-name" placeholder="Ваше имя"/>
+
+      <label for="last-name">Фамилия</label>
+      <input type="text" id="last-name" placeholder="Ваша фамилия"/>
+
+      <label for="profile-patronymic">Отчество</label>
+      <input type="text" id="profile-patronymic" placeholder="Ваше отчество"/>
+
+      <label for="phone">Телефон</label>
+      <input type="tel" id="phone" readonly/>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="ваш@email.ru"/>
+
+      <button type="submit" class="save-btn">Сохранить</button>
+    </form>
+  </div>
+
+  <script type="module" src="js/profile.js"></script>
+</body>
+</html>

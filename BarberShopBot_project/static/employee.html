@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Профиль сотрудника</title>
+  <link rel="stylesheet" href="css/employee.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="employee-page">
+    <header class="page-header">
+      <button id="detail-back" class="back-btn">❮ Назад</button>
+      <h2 id="emp-name">Имя</h2>
+    </header>
+
+    <div class="avatar-wrap">
+      <img id="emp-avatar" src="" alt="Фото" class="avatar-large">
+    </div>
+
+    <div class="rating-big" id="emp-rating">⭐ 5</div>
+
+    <hr>
+
+    <section class="about">
+      <h3>О себе</h3>
+      <p id="emp-bio">Здесь будет описание мастера.</p>
+    </section>
+
+    <section class="reviews">
+      <h3>Отзывы <span id="emp-rev-count" class="badge-small">0</span></h3>
+      <!-- сюда можно подгрузить превью отзывов -->
+    </section>
+  </div>
+
+  <script>
+    const tg = Telegram.WebApp; tg.ready();
+
+    // Назад
+    document.getElementById('detail-back')
+      .onclick = () => window.location.href = 'employees.html';
+
+    // Получим id из URL ?id=…
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+
+    // TODO: fetch(`/api/employee?id=${id}`) и заполнить:
+    // для примера — хардкод:
+    const data = {
+      avatar: 'images/emp1.jpg',
+      name:   'Максим',
+      rating: 5,
+      bio:    'Мастер с 10‑летним стажем. Специализируется на классических стрижках.',
+      reviews: 13
+    };
+
+    // Заполнить UI:
+    document.getElementById('emp-avatar').src     = data.avatar;
+    document.getElementById('emp-name').textContent   = data.name;
+    document.getElementById('emp-rating').textContent = '⭐ ' + data.rating;
+    document.getElementById('emp-bio').textContent     = data.bio;
+    document.getElementById('emp-rev-count').textContent = data.reviews;
+  </script>
+</body>
+</html>

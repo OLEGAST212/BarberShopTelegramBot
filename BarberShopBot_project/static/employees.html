@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum‑scale=1,user‑scalable=no">
+  <title>Сотрудники</title>
+  <link rel="stylesheet" href="css/employees.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="employees-page">
+    <header class="page-header">
+      <button id="emp-back" class="back-btn">❮ Назад</button>
+      <h2>Сотрудники</h2>
+    </header>
+
+    <nav class="emp-tabs">
+      <button class="tab active" data-filter="all">Все</button>
+      <button class="tab" data-filter="barber">Барбер</button>
+      <button class="tab" data-filter="top">Топ Барбер</button>
+    </nav>
+
+    <ul id="emp-list" class="emp-list">
+      <!-- пример элементов: -->
+      <li class="emp-item" data-role="barber" data-id="1">
+        <img src="images/emp1.jpg" alt="Максим" class="avatar">
+        <div class="info">
+          <div class="name">Максим</div>
+          <div class="role">Барбер</div>
+        </div>
+        <div class="rating">⭐ 5</div>
+      </li>
+      <li class="emp-item" data-role="top" data-id="2">
+        <img src="images/emp2.jpg" alt="Артём" class="avatar">
+        <div class="info">
+          <div class="name">Артём</div>
+          <div class="role">Топ Барбер</div>
+        </div>
+        <div class="rating">⭐ 5</div>
+      </li>
+      <!-- … динамически подгружать через JS/API … -->
+    </ul>
+  </div>
+
+  <script>
+    const tg = Telegram.WebApp; tg.ready();
+    document.getElementById('emp-back')
+      .onclick = () => window.location.href = 'record.html';
+
+    // Переключение табов + фильтрация
+    const tabs = document.querySelectorAll('.emp-tabs .tab');
+    const items = document.querySelectorAll('.emp-list .emp-item');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        items.forEach(li => {
+          if (filter==='all' || li.dataset.role===filter) {
+            li.style.display = 'flex';
+          } else {
+            li.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Клик по сотруднику — открываем detail
+    items.forEach(li => {
+      li.addEventListener('click', () => {
+        const id = li.dataset.id;
+        window.location.href = `employee.html?id=${id}`;
+      });
+    });
+  </script>
+</body>
+</html>

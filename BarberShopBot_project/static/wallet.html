@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Кошелёк</title>
+  <base href="/">
+  <link rel="stylesheet" href="css/wallet.css"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <section id="wallet-page">
+    <div class="page-header">
+      <button type="button" id="wallet-back" class="back-btn">Назад</button>
+      <h2>Кошелёк</h2>
+    </div>
+
+    <div class="wallet-empty">
+      <div class="empty-icon">🕷️</div>
+      <p class="empty-title">Увы, в кошельке пусто</p>
+      <p class="empty-subtitle">У вас пока нет ни одной карты лояльности</p>
+    </div>
+  </section>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    const params   = new URLSearchParams(window.location.search);
+    const initData = params.get("init_data") || Telegram.WebApp.initData || "";
+
+    // Назад
+    document.getElementById('appt-back').onclick = () => {
+      location.href = `index.html?init_data=${encodeURIComponent(initData)}`;
+    };
+  </script>
+</body>
+</html>

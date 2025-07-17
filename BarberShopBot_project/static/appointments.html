@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <base href="/" />
+  <title>Записаться</title>
+  <link rel="stylesheet" href="css/appointments.css"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="appt-page">
+    <header class="page-header">
+      <button id="appt-back" class="back-btn">❮ Назад</button>
+      <h2>Записаться</h2>
+    </header>
+
+    <ul class="options-list">
+      <li class="option-item" data-key="employee">
+        <img src="images/icon-employee.png" class="opt-icon"/><span class="opt-text">Сотрудник</span><span class="opt-arrow">❯</span>
+      </li>
+      <li class="option-item" data-key="datetime">
+        <img src="images/icon-datetime.png" class="opt-icon"/><span class="opt-text">Дата и время</span><span class="opt-arrow">❯</span>
+      </li>
+      <li class="option-item" data-key="service">
+        <img src="images/icon-services.png" class="opt-icon"/><span class="opt-text">Услуги</span><span class="opt-arrow">❯</span>
+      </li>
+    </ul>
+
+    <button id="confirm-btn" class="confirm-btn" disabled>Оформить запись</button>
+  </div>
+
+  <script>
+    const tg = Telegram.WebApp;
+    tg.ready();
+
+    // возьмём init_data из URL
+    const params   = new URLSearchParams(window.location.search);
+    const initData = params.get("init_data") || Telegram.WebApp.initData || "";
+
+    // Назад
+    document.getElementById('appt-back').onclick = () => {
+      location.href = `index.html?init_data=${encodeURIComponent(initData)}`;
+    };
+
+    // Выборы
+    const state     = { employee: false, datetime: false, service: false };
+    const confirmBtn = document.getElementById('confirm-btn');
+    document.querySelectorAll('.option-item').forEach(item => {
+      item.onclick = () => {
+        const key = item.dataset.key;
+        state[key] = !state[key];
+        item.classList.toggle('chosen', state[key]);
+        const ready = Object.values(state).every(v => v);
+        confirmBtn.disabled = !ready;
+        confirmBtn.classList.toggle('enabled', ready);
+      };
+    });
+
+    // Оформить запись
+    confirmBtn.onclick = () => {
+      if (!confirmBtn.disabled) {
+        // здесь можно tg.sendData или POST в /api/appointments?init_data=
+        alert('Запись оформлена!');
+      }
+    };
+  </script>
+</body>
+</html>

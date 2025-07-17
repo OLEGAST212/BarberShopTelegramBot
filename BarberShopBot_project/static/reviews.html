@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Отзывы</title>
+  <base href="/">
+  <link rel="stylesheet" href="css/shop.css"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <section id="shop-page">
+    <div class="page-header">
+      <button type="button" id="shop-back" class="back-btn">Назад</button>
+      <h2>Отзывы</h2>
+    </div>
+
+  </section>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    const params   = new URLSearchParams(window.location.search);
+    const initData = params.get("init_data") || Telegram.WebApp.initData || "";
+
+    // Назад
+    document.getElementById('appt-back').onclick = () => {
+      location.href = `index.html?init_data=${encodeURIComponent(initData)}`;
+    };
+  </script>
+</body>
+</html>

@@ -11,4 +11,4 @@ ADMIN_THREAD_ID_1 = 40
 # ID Чата Отзывов
 ADMIN_THREAD_ID_2 = 42
 # URL сайта с мини-приложением
-WEB_APP_URL = "https://olegast212.github.io"
+WEB_APP_URL = "https://short-pumas-sell.loca.lt"

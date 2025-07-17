@@ -1,0 +1,100 @@
+/* Сбросы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #EFF3F8;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+}
+
+/* Хедер */
+.page-header {
+  position: relative;
+  height: 56px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-btn {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #2F80ED;
+  font-size: 16px;
+  cursor: pointer;
+}
+.page-header h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1F1F1F;
+}
+
+/* Список языков */
+.lang-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+.lang-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E0E0E0;
+  cursor: pointer;
+}
+.lang-item:last-child {
+  border-bottom: none;
+}
+.lang-item .flag {
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  margin-right: 12px;
+}
+.lang-item .info {
+  flex: 1;
+}
+.lang-item .info .title {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+.lang-item .info .subtitle {
+  display: block;
+  font-size: 14px;
+  color: #828282;
+  margin-top: 2px;
+}
+/* Радиокнопка */
+.lang-item .radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #E0E0E0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lang-item .radio span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+}
+.lang-item.selected .radio {
+  border-color: #2F80ED;
+}
+.lang-item.selected .radio span {
+  background: #2F80ED;
+}

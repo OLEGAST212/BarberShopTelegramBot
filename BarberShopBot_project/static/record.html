@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Мои записи</title>
+  <link rel="stylesheet" href="css/record.css"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="page-header">
+    <button id="record-back" class="back-btn">❮ Назад</button>
+    <h2>Мои записи</h2>
+  </div>
+
+  <div class="tabs">
+    <button id="tab-current" class="tab active">Текущие</button>
+    <button id="tab-past"    class="tab">Прошедшие</button>
+  </div>
+
+  <div id="content-current" class="tab-content">
+    <div class="empty-state">
+      <div class="empty-icon">📅</div>
+      <div class="empty-title">Увы, ничего не запланировано</div>
+      <div class="empty-subtitle">У вас нет ни одной активной записи</div>
+    </div>
+  </div>
+
+  <div id="content-past" class="tab-content hidden">
+    <div class="empty-state">
+      <div class="empty-icon">📖</div>
+      <div class="empty-title">Пока нет прошлых записей</div>
+      <div class="empty-subtitle">Когда‑нибудь здесь появятся ваши завершённые услуги</div>
+    </div>
+  </div>
+
+  <script>
+    const tg = Telegram.WebApp;
+    tg.ready();
+
+    document.getElementById("record-back").onclick = () => {
+      window.location.href = "index.html";
+    };
+
+    const tabCurrent = document.getElementById("tab-current");
+    const tabPast    = document.getElementById("tab-past");
+    const contCur    = document.getElementById("content-current");
+    const contPast   = document.getElementById("content-past");
+
+    tabCurrent.onclick = () => {
+      tabCurrent.classList.add("active");
+      tabPast.classList.remove("active");
+      contCur.classList.remove("hidden");
+      contPast.classList.add("hidden");
+    };
+    tabPast.onclick = () => {
+      tabPast.classList.add("active");
+      tabCurrent.classList.remove("active");
+      contPast.classList.remove("hidden");
+      contCur.classList.add("hidden");
+    };
+  </script>
+</body>
+</html>

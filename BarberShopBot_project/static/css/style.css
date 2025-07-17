@@ -1,0 +1,142 @@
+/* css/style.css */
+
+/* Общие сбросы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #EFF3F8;
+  color: #333333;
+  line-height: 1.4;
+}
+
+/* Header */
+.header {
+  background-color: #FFFFFF;
+  padding: 16px;
+}
+.header-content {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+}
+.branding h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1F1F1F;
+}
+.branding p {
+  font-size: 12px;
+  color: #828282;
+}
+
+/* Icon nav (без изображений, просто текстовые кнопки) */
+.icon-nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #FFFFFF;
+  padding: 12px 0;
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #2F80ED;
+  cursor: pointer;
+}
+.icon-btn span {
+  display: block;
+}
+
+/* Main action button */
+.main-action {
+  background-color: #FFFFFF;
+  padding: 16px;
+}
+.big-btn {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #2F80ED;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* List menu */
+.list-menu {
+  margin-top: 8px;
+}
+.list-menu ul {
+
+  list-style: none;
+}
+.list-item {
+  position: relative;        /* чтобы ::after работал */
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E0E0E0;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Отступ справа у бейджа, чтобы стрелка не налезала */
+.list-item .badge {
+  margin-left: auto;
+  margin-right: 24px;        /* пространство под стрелку */
+  background-color: #F2C94C;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: #333333;
+}
+
+/* Отступ справа у value (Язык), если нет бейджа */
+.list-item .value {
+  margin-left: auto;
+  margin-right: 24px;
+}
+
+/* Псевдо‑элемент со стрелкой для всех пунктов */
+.list-item::after {
+  content: "❯";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #BDBDBD;
+  font-weight: normal;
+}
+
+/* Footer */
+.footer {
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 10px;
+  color: #BDBDBD;
+  margin-top: 8px;
+}
+.footer small {
+  display: block;
+  margin-bottom: 4px;
+}
+.footer p {
+  margin: 0;
+}

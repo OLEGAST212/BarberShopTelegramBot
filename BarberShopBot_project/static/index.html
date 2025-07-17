@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <base href="/" />
+  <title>Сибирь Барбершоп</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <img src="images/logo.jpg" alt="Логотип" class="logo">
+      <div class="branding">
+        <h1>Сибирь</h1>
+        <p>Барбершоп</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Top icons -->
+  <nav class="icon-nav">
+    <button class="icon-btn" data-action="address">
+      <img src="images/icon-address.png" alt="Адрес"><span>Адрес</span>
+    </button>
+    <button class="icon-btn" data-action="appointments">
+      <img src="images/icon-appointments.png" alt="Записи"><span>Записи</span>
+    </button>
+    <button id="share-btn" class="icon-btn" data-action="share">
+      <img src="images/icon-share.png" alt="Поделиться"><span>Поделиться</span>
+    </button>
+    <button class="icon-btn" data-action="profile">
+      <img src="images/icon-profile.png" alt="Профиль"><span>Профиль</span>
+    </button>
+  </nav>
+
+  <!-- Main action -->
+  <section class="main-action">
+    <button id="services-btn" class="big-btn" data-action="appointments">
+      Персональные услуги
+    </button>
+  </section>
+
+  <!-- List menu -->
+  <section class="list-menu">
+    <ul>
+      <li class="list-item" data-action="wallet">
+        <img src="images/icon-wallet.png" class="list-icon" alt="">Кошелёк <span class="badge">0</span>
+      </li>
+      <li class="list-item" data-action="shop">
+        <img src="images/icon-shop.png" class="list-icon" alt="">Магазин
+      </li>
+      <li class="list-item" data-action="reviews">
+        <img src="images/icon-reviews.png" class="list-icon" alt="">
+        Отзывы <span class="badge">27</span>
+      </li>
+      <li class="list-item" data-action="about">
+        <img src="images/icon-about.png" class="list-icon" alt="">О компании
+      </li>
+      <li class="list-item" data-action="language">
+        <img src="images/icon-language.png" class="list-icon" alt="">
+        Язык <span class="value">Русский</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <small>30.0.0-1508</small>
+  </footer>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    // сразу заберём init_data (будет непустым на первом входе)
+    const initData = Telegram.WebApp.initData || "";
+
+    // share
+    const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
+    const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
+
+    // Обработчик всех icon-btn
+    document.querySelectorAll('.icon-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        switch (action) {
+          case 'address':
+            tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
+            break;
+          case 'appointments':
+            location.href = `appointments.html?init_data=${encodeURIComponent(initData)}`;
+            break;
+          case 'share':
+            // надёжно внутри Telegram мобайл
+            const tgShare =
+              'https://t.me/share/url?' +
+              'url='  + encodeURIComponent(shareUrl) +
+              '&text=' + encodeURIComponent(shareText);
+            tg.openLink(tgShare);
+            break;
+          case 'profile':
+            location.href = `profile.html?init_data=${encodeURIComponent(initData)}`;
+            break;
+        }
+      });
+    });
+
+    // big-btn (дублирует appointments)
+    document.querySelectorAll('.big-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        location.href = `appointments.html?init_data=${encodeURIComponent(initData)}`;
+      });
+    });
+
+    // list-menu (для полноты, init_data можно не передавать, если там нет API)
+    document.querySelectorAll('.list-item').forEach(li => {
+      li.addEventListener('click', () => {
+        const pg = li.dataset.action + '.html';
+        location.href = pg + `?init_data=${encodeURIComponent(initData)}`;
+      });
+    });
+  </script>
+</body>
+</html>
