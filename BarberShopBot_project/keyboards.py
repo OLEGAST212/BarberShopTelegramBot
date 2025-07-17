@@ -10,7 +10,7 @@ from telegram import (
     InlineKeyboardMarkup,
 )
 import logging
-from config import WEB_APP_URL,WEB_APP_URL_2
+from config import WEB_APP_URL
 
 def contact_keyboard() -> ReplyKeyboardMarkup:
     """Клавиатура для запроса и отправки номера."""

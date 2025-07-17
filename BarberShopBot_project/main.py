@@ -24,9 +24,14 @@ from handlers.errors import register_error_handler
 api = FastAPI()
 bot = Bot(token=BOT_TOKEN)
 
-# монтируем собранный фронт из папки static/
-api.mount("/", StaticFiles(directory="static", html=True), name="static")
-
+api.mount(
+    "/",
+    StaticFiles(
+        directory=r"C:\Users\dmitr\Documents\GitHub\OLEGAST212.github.io",
+        html=True
+    ),
+    name="static"
+)
 class ProfileIn(BaseModel):
     init_data: str
     first_name: str
