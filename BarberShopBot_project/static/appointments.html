@@ -18,13 +18,13 @@
 
     <ul class="options-list">
       <li class="option-item" data-key="employee">
-        <img src="images/icon-employee.png" class="opt-icon"/><span class="opt-text">Сотрудник</span><span class="opt-arrow">❯</span>
+        <img src="images/icon-employee.png" class="opt-icon" alt=""><span class="opt-text">Сотрудник</span><span class="opt-arrow">❯</span>
       </li>
       <li class="option-item" data-key="datetime">
-        <img src="images/icon-datetime.png" class="opt-icon"/><span class="opt-text">Дата и время</span><span class="opt-arrow">❯</span>
+        <img src="images/icon-datetime.png" class="opt-icon" alt=""><span class="opt-text">Дата и время</span><span class="opt-arrow">❯</span>
       </li>
       <li class="option-item" data-key="service">
-        <img src="images/icon-services.png" class="opt-icon"/><span class="opt-text">Услуги</span><span class="opt-arrow">❯</span>
+        <img src="images/icon-services.png" class="opt-icon" alt=""><span class="opt-text">Услуги</span><span class="opt-arrow">❯</span>
       </li>
     </ul>
 
@@ -32,39 +32,41 @@
   </div>
 
   <script>
-    const tg = Telegram.WebApp;
+    const tg = window.Telegram.WebApp;
     tg.ready();
 
-    // возьмём init_data из URL
+    // вытаскиваем init_data из URL
     const params   = new URLSearchParams(window.location.search);
-    const initData = params.get("init_data") || Telegram.WebApp.initData || "";
+    const initData = params.get("init_data") || "";
 
-    // Назад
-    document.getElementById('appt-back').onclick = () => {
+    // Кнопка «Назад»
+    document.getElementById('appt-back').addEventListener('click', () => {
       location.href = `index.html?init_data=${encodeURIComponent(initData)}`;
-    };
+    });
 
-    // Выборы
-    const state     = { employee: false, datetime: false, service: false };
+    // Выбор пунктов
+    const state = { employee: false, datetime: false, service: false };
     const confirmBtn = document.getElementById('confirm-btn');
+
     document.querySelectorAll('.option-item').forEach(item => {
-      item.onclick = () => {
+      item.addEventListener('click', () => {
         const key = item.dataset.key;
         state[key] = !state[key];
         item.classList.toggle('chosen', state[key]);
         const ready = Object.values(state).every(v => v);
         confirmBtn.disabled = !ready;
         confirmBtn.classList.toggle('enabled', ready);
-      };
+      });
     });
 
-    // Оформить запись
-    confirmBtn.onclick = () => {
+    // Оформить запись (у вас здесь tg.sendData или POST в API)
+    confirmBtn.addEventListener('click', () => {
       if (!confirmBtn.disabled) {
-        // здесь можно tg.sendData или POST в /api/appointments?init_data=
+        // ❗️ ваш код сохранения, например:
+        // tg.sendData(JSON.stringify({ type: 'appointment', payload: { ... } }));
         alert('Запись оформлена!');
       }
-    };
+    });
   </script>
 </body>
 </html>

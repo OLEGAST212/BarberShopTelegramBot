@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <base href="/" />
   <title>Сибирь Барбершоп</title>
   <link rel="stylesheet" href="css/style.css">
@@ -13,7 +13,7 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <img src="images/logo.jpg" alt="Логотип" class="logo">
+      <img src="images/logo.jpg" class="logo" alt="Логотип">
       <div class="branding">
         <h1>Сибирь</h1>
         <p>Барбершоп</p>
@@ -48,21 +48,19 @@
   <section class="list-menu">
     <ul>
       <li class="list-item" data-action="wallet">
-        <img src="images/icon-wallet.png" class="list-icon" alt="">Кошелёк <span class="badge">0</span>
+        <img src="images/icon-wallet.png" class="list-icon"><span>Кошелёк</span><span class="badge">0</span>
       </li>
       <li class="list-item" data-action="shop">
-        <img src="images/icon-shop.png" class="list-icon" alt="">Магазин
+        <img src="images/icon-shop.png" class="list-icon"><span>Магазин</span>
       </li>
       <li class="list-item" data-action="reviews">
-        <img src="images/icon-reviews.png" class="list-icon" alt="">
-        Отзывы <span class="badge">27</span>
+        <img src="images/icon-reviews.png" class="list-icon"><span>Отзывы</span><span class="badge">27</span>
       </li>
       <li class="list-item" data-action="about">
-        <img src="images/icon-about.png" class="list-icon" alt="">О компании
+        <img src="images/icon-about.png" class="list-icon"><span>О компании</span>
       </li>
       <li class="list-item" data-action="language">
-        <img src="images/icon-language.png" class="list-icon" alt="">
-        Язык <span class="value">Русский</span>
+        <img src="images/icon-language.png" class="list-icon"><span>Язык</span><span class="value">Русский</span>
       </li>
     </ul>
   </section>
@@ -73,17 +71,16 @@
   </footer>
 
   <script>
-    const tg = window.Telegram.WebApp;
+    const tg       = window.Telegram.WebApp;
     tg.ready();
 
-    // сразу заберём init_data (будет непустым на первом входе)
+    // init_data нам даёт Telegram только при первом открытии:
     const initData = Telegram.WebApp.initData || "";
 
-    // share
     const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
     const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
 
-    // Обработчик всех icon-btn
+    // верхние иконки
     document.querySelectorAll('.icon-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const action = btn.dataset.action;
@@ -95,7 +92,7 @@
             location.href = `appointments.html?init_data=${encodeURIComponent(initData)}`;
             break;
           case 'share':
-            // надёжно внутри Telegram мобайл
+            // жёсткий Telegram‑шейр через openLink
             const tgShare =
               'https://t.me/share/url?' +
               'url='  + encodeURIComponent(shareUrl) +
@@ -109,18 +106,16 @@
       });
     });
 
-    // big-btn (дублирует appointments)
-    document.querySelectorAll('.big-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        location.href = `appointments.html?init_data=${encodeURIComponent(initData)}`;
-      });
+    // большая кнопка «Персональные услуги»
+    document.getElementById('services-btn').addEventListener('click', () => {
+      location.href = `appointments.html?init_data=${encodeURIComponent(initData)}`;
     });
 
-    // list-menu (для полноты, init_data можно не передавать, если там нет API)
+    // нижнее меню
     document.querySelectorAll('.list-item').forEach(li => {
       li.addEventListener('click', () => {
-        const pg = li.dataset.action + '.html';
-        location.href = pg + `?init_data=${encodeURIComponent(initData)}`;
+        const page = li.dataset.action + '.html';
+        location.href = `${page}?init_data=${encodeURIComponent(initData)}`;
       });
     });
   </script>
